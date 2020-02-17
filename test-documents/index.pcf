@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?pcf-stylesheet site="ksu-resources" path="/ksu-resources/xsl/default.xsl" extension="html" title="Web" ?>
+<!DOCTYPE PUBLIC SYSTEM "http://commons.omniupdate.com/dtd/standard.dtd">
+
+<document>
+   <config>
+      <!-- com.omniupdate.properties -->
+      <parameter type="radio" name="banner" prompt="Banner" alt="Banners are supplied by the Division of Communications and Marketing." group="Everyone">
+<option value="none" selected="false">None</option>
+<option value="full" selected="false">Full height, single image</option>
+<option value="half" selected="false">Half height, single image</option>
+<option value="megaslider" selected="true">Large feature banner (configure in banner-slider-config.pcf)</option>
+</parameter>
+      <parameter type="checkbox" name="widget" prompt="Columns" alt="Include optional left and/or right columns." group="Everyone">
+<option value="left" selected="true">Left</option>
+<option value="right" selected="false">Right</option>
+</parameter>
+      <parameter type="checkbox" name="breadcrumb" prompt="Breadcrumb" alt="Override folder-based breadcrumbs for this page?" group="Everyone">
+<option value="custom" selected="false">Page-specific breadcrumb? (not recommended)</option>
+</parameter>
+      <parameter type="radio" name="unitmenu" prompt="Site menu" alt="Menu in the left column." group="Everyone">
+<option value="standard" selected="true">Standard site menu</option>
+<option value="custom" selected="false">Page-specific menu</option>
+</parameter>
+      <parameter type="checkbox" name="unitnote" prompt="Unit notes" alt="Include notes in the left column?" group="Everyone">
+<option value="standard" selected="false">Standard site note</option>
+<option value="custom" selected="false">Page-specific note</option>
+</parameter>
+      <parameter type="checkbox" name="unitaddress" prompt="Unit addresses" alt="Include addresses in the left column?" group="Everyone">
+<option value="standard" selected="true">Standard site address</option>
+<option value="custom" selected="false">Page-specific address</option>
+</parameter>
+      <parameter type="checkbox" name="sidebar-secondary-box" prompt="Page-specific content box" alt="Enable a page-specific box in right sidebar." group="Everyone">
+<option value="above" selected="false">Above widgets</option>
+<option value="below" selected="false">Below widgets</option>
+</parameter>
+      <parameter type="text" name="widget1" prompt="Widget 1" alt="Specify the first widget on the page" group="Everyone"></parameter>
+      <parameter type="text" name="widget1-config" prompt="configuration" alt="variable=value; var2=val2;...}" group="Everyone"></parameter>
+
+      <parameter type="text" name="widget2" prompt="Widget 2" alt="Specify the second widget on the page" group="Everyone"></parameter>
+      <parameter type="text" name="widget2-config" prompt="configuration" alt="{variable=value; var2=val2;...}" group="Everyone"></parameter>
+
+      <parameter type="text" name="widget3" prompt="Widget 3" alt="Specify the third widget on the page" group="Everyone"></parameter>
+      <parameter type="text" name="widget3-config" prompt="configuration" alt="variable=value; var2=val2;...}" group="Everyone"></parameter>
+
+      <parameter type="text" name="widget4" prompt="Widget 4" alt="Specify the fourth widget on the page" group="Everyone"></parameter>
+      <parameter type="text" name="widget4-config" prompt="configuration" alt="{variable=value; var2=val2;...}" group="Everyone"></parameter>
+
+      <parameter type="text" name="widget5" prompt="Widget 5" alt="Specify the fifth widget on the page" group="Everyone"></parameter>
+      <parameter type="text" name="widget5-config" prompt="configuration" alt="variable=value; var2=val2;...}" group="Everyone"></parameter>
+
+      <parameter type="text" name="widget6" prompt="Widget 6" alt="Specify the sixth widget on the page" group="Everyone"></parameter>
+      <parameter type="text" name="widget6-config" prompt="configuration" alt="{variable=value; var2=val2;...}" group="Everyone"></parameter>
+      <!-- /com.omniupdate.properties -->
+   </config>
+
+   <!-- com.omniupdate.properties -->
+      <title>About K-State | Kansas State University</title>
+   <!-- /com.omniupdate.properties -->
+
+   <metadata>
+      <!-- com.omniupdate.properties -->
+      <meta name="keywords" content="KSU" />
+      <meta name="description" content="" />
+      <meta name="author" content="" />
+      <!-- /com.omniupdate.properties -->
+   </metadata>
+
+   <content>
+
+      <banner>
+         <!-- com.omniupdate.div label="banner" group="Everyone" button="hide" --><!-- ouc:multiedit type="image" prompt="Banner Image" alt="Select a banner image" path="/images/banners" lockout="yes"/ --><img src="{{f:16381759}}" alt="About Kansas State University" /><!-- /com.omniupdate.div -->
+      </banner>
+
+      <breadcrumb>
+         <!-- com.omniupdate.div label="breadcrumb" group="Everyone" button="707" position="top" --><!-- com.omniupdate.editor csspath="/ksu-resources/ou/editor/css/breadcrumb.css" cssmenu="/ksu-resources/ou/editor/css/breadcrumb-classes.txt" -->
+<a href="/">K-State home</a>&nbsp;&gt; This is a custom breadcrumb &gt; Some More Text<br /><!-- /com.omniupdate.div -->
+      </breadcrumb>
+
+      <sidebar-secondary-box-above>
+         <!-- com.omniupdate.div label="sidebar-secondary-box-above" group="Everyone" button="707" position="top" -->
+         <!-- com.omniupdate.editor csspath="/ksu-resources/ou/editor/css/secondary-sidebar-box.css" cssmenu="/ksu-resources/ou/editor/css/secondary-sidebar-box-classes.txt" -->
+         insert text here
+         <!-- /com.omniupdate.div -->
+      </sidebar-secondary-box-above>
+
+      <sidebar-secondary-html>
+         <!-- com.omniupdate.div label="sidebar-secondary-html" group="Everyone" button="707" position="top" -->
+         <!-- com.omniupdate.editor csspath="/ksu-resources/ou/editor/css/secondary-sidebar-box.css" cssmenu="/ksu-resources/ou/editor/css/secondary-sidebar-box-classes.txt" -->
+         <!-- /com.omniupdate.div -->
+      </sidebar-secondary-html>
+
+      <sidebar-secondary-box-below>
+         <!-- com.omniupdate.div label="sidebar-secondary-box-below" group="Everyone" button="707" position="top" -->
+         <!-- com.omniupdate.editor csspath="/ksu-resources/ou/editor/css/secondary-sidebar-box.css" cssmenu="/ksu-resources/ou/editor/css/secondary-sidebar-box-classes.txt" -->
+         insert text here
+         <!-- /com.omniupdate.div -->
+      </sidebar-secondary-box-below>
+
+      <unitmenu>
+         <!-- com.omniupdate.div label="unitmenu" group="Everyone" button="707" -->
+         <!-- com.omniupdate.editor csspath="/ksu-resources/ou/editor/css/unitmenu.css" cssmenu="/ksu-resources/ou/editor/css/unitmenu-classes.txt" -->
+<ul class="ksu-unit-menu">
+<li><a href="/">Home</a></li>
+<li><a href="/">Menu choice 2</a></li>
+<li><a href="/">Menu choice 3</a></li>
+</ul>
+         <!-- /com.omniupdate.div -->
+      </unitmenu>
+
+      <unitnote>
+         <!-- com.omniupdate.div label="unitnote" group="Everyone" button="707" -->
+         <!-- com.omniupdate.editor csspath="/ksu-resources/ou/editor/css/unitnote.css" cssmenu="/ksu-resources/ou/editor/css/unitnote-classes.txt" -->
+<div class="ksu-sidebar-note">
+<p>insert text here</p></div>
+<!-- /com.omniupdate.div -->
+      </unitnote>
+
+      <unitaddress>
+         <!-- com.omniupdate.div label="unitaddress" group="Everyone" button="707" -->
+         <!-- com.omniupdate.editor csspath="/ksu-resources/ou/editor/css/unitaddress.css" cssmenu="/ksu-resources/ou/editor/css/unitaddress-classes.txt" -->
+         <div class="ksu-sidebar-address">insert text here</div>
+         <!-- /com.omniupdate.div -->
+      </unitaddress>
+
+      <maincontent>
+         <!-- com.omniupdate.div label="maincontent" group="Everyone" button="707" --><!-- ouc:editor csspath="/ksu-resources/ou/editor/css/maincontent.css" cssmenu="/ksu-resources/ou/editor/css/maincontent-classes.txt" width="900"/ --><h3>Experience the Wildcat Way</h3>
+<p style="font-size: 14px;">It doesn't matter if you ask a longtime professor, recent graduate, passionate alumnus or a fresh-eyed freshman. Pick a member of the K-State community at random and ask him or her what it means to be a Wildcat, and you will most likely get a one-word answer: &nbsp;Family.</p>
+<table class="ksu-feature-config" data-ksu-feature-name="video" data-ksu-snippet-name="video/1.0"><caption>Video embed configuration</caption>
+<tbody>
+<tr>
+<td data-keyword="video-url">
+<h5>Video URL</h5>
+URL to the video on YouTube, Vimeo, or Mediasite. Examples:
+<ul>
+<li>https://youtu.be/<em>identifier</em></li>
+<li>https://www.youtube.com/watch?v=<em>identifier</em></li>
+<li>https://vimeo.com/<em>identifier</em></li>
+<li>https://mediasite.k-state.edu/mediasite/Play/<em>identifier</em></li>
+</ul>
+</td>
+<td>http://www.youtube.com/watch?v=ww40DOpNGR0</td>
+</tr>
+<tr>
+<td data-keyword="aspect">
+<h5>Aspect ratio</h5>
+Defaults to 16:9, but may be specified as 4:3.</td>
+<td>&nbsp;</td>
+</tr>
+</tbody>
+</table>
+         <h4><span>Family Values</span></h4>
+         <h4><span class="foo">Family Values</span></h4>
+         <p style="font-size: 14px;">K-Staters consider themselves family, and that belief shines through contributions as diverse as our members. Researchers invent solutions to problems that could save a life halfway across the world, and students band together on a Saturday morning for community service. Thousands of Wildcat fans pack our stadiums shouting in unison, and our leadership guides us in ways befitting the obligations of a land-grant university.</p>
+<p style="font-size: 14px;">In fact, these obligations could be considered our family values, and the many ways we achieve them are the Wildcat Way. We invite you to come along for the ride, because there's always room for one more in the K-State family.&nbsp;</p>
+         
+         <p id="yui-123123">Delete this YUI attribute</p>
+         <!-- /com.omniupdate.div -->
+      </maincontent>
+
+      <extracss>
+      <style type="text/css">
+      .foo {
+         color: red;
+      }
+      </style>
+      </extracss>
+
+      <extrajs>
+      <script type="text/javascript" src="foo.js"></script>
+      <script type="text/javascript">
+      console.log("Hello, world");
+      </script>
+      </extrajs>
+
+   </content>
+</document>
