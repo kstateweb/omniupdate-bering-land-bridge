@@ -1,17 +1,22 @@
 #!/usr/local/bin/perl -w
 
+# This is the start of the site conversion process.
+# you will very likely need to change paths to various files below.
+
 use strict;
 use File::Find ();
 use File::Path qw(make_path);
 use Cwd;
 
 my $transformCommand = "C:/Program Files/Saxonica/SaxonHE9.9N/bin/Transform.exe";
-my $transformPcfXslt = "C:/Users/neil/Documents/GitHub/omniupdate-bering-land-bridge/convert-pcf.xsl";
-my $transformPropertiesXslt = "C:/Users/neil/Documents/GitHub/omniupdate-bering-land-bridge/convert-properties.xsl";
+my $transformQueuedPcfXslt = "convert-queued-pcfs.xsl";
+my $transformPcfXslt = "convert-pcf.xsl";
+my $transformPropertiesXslt = "convert-properties.xsl";
 my $current_dir = Cwd::cwd();
 my $datadir = "C:/omniupdate-bering-land-bridge-data/about";
 my $inputdir = "$datadir/input";
 my $outputdir = "$datadir/output";
+my @pcfqueue = ();
 
 my $files_total = 0;
 my $files_updated = 0;
@@ -31,46 +36,49 @@ use vars qw/*name *dir *prune/;
 sub wanted;
 
 
+# sub updatePCF {
+#    my($inputfile, $outputfile) = @_;
+#    my($rc);
+#    my $xslt = $transformPcfXslt;
 
-# Old file looks like:
+#    if ($inputfile =~ /properties.pcf$/) {
+#       $xslt = $transformPropertiesXslt;
+#    }
 
-# <?xml version="1.0" encoding="utf-8"?>
-# <?pcf-stylesheet site="ksu-resources" path="/xsl/properties.xsl" extension="inc" ?>
-# <!DOCTYPE document SYSTEM "http://commons.omniupdate.com/dtd/standard.dtd">
+#    my $cmd = qq("$transformCommand" "-s:$inputfile" "-xsl:$xslt" "-o:$outputfile" -opt:0 2>&1);
+#    # print "Running $cmd\n";
+#    $rc = system($cmd);
 
-# <directory>
-#    <!-- com.omniupdate.properties -->
-#    <parameter name="title" type="text" group="Everyone" prompt="Breadcrumb" alt="Name for this folder's breadcrumb">...breadcrumb...</parameter>
-#    <!-- /com.omniupdate.properties -->
-# </directory>
-
-# new file looks like:
-
-# <?xml version="1.0" encoding="utf-8"?>
-# <?pcf-stylesheet site="ksu-resources" path="/xsl/properties.xsl" extension="inc" ?>
-# <!DOCTYPE document SYSTEM "http://commons.omniupdate.com/dtd/standard.dtd">
-
-# <directory xmlns:ouc="http://omniupdate.com/XSL/Variables">
-#    <ouc:properties>
-#       <parameter name="breadcrumb" type="text" group="Everyone" prompt="Breadcrumb" alt="Name for this folder's breadcrumb">...breadcrumb...</parameter>
-#    </ouc:properties>
-
-#     <content>
-#       <ouc:div label="fakecontent" group="Everyone" button="707">Use page properties to edit this page.</ouc:div>
-#    </content>
-# </directory>
+#    if ($rc) {
+#       print "   Error return from transform: $rc\n";
+#    }
+   
+# }
 
 
-sub updatePCF {
-   my($inputfile, $outputfile) = @_;
-   my($rc);
-   my $xslt = $transformPcfXslt;
+sub queuePCF {
+   my($displayname, $inputfile, $outputfile) = @_;
 
-   if ($inputfile =~ /properties.pcf$/) {
-      $xslt = $transformPropertiesXslt;
-   }
+   push(@pcfqueue, "<file><displayname>$displayname</displayname><input>$inputfile</input><output>$outputfile</output></file>");
+}
 
-   my $cmd = qq("$transformCommand" "-s:$inputfile" "-xsl:$xslt" "-o:$outputfile" -opt:0 2>&1);
+
+
+sub updateQueuedPCFs {
+   my(@queue) = @_;
+   my $rc;
+   my $xslt = $transformQueuedPcfXslt;
+   my $queuefile = "temp/queued-pcfs.xml";
+
+   print "Pass 2 -- convert PCF files\n";
+
+   open QUEUE, ">$queuefile" || die "Unable to open '$queuefile': $!\n";
+   print QUEUE "<files>\n";
+   print QUEUE join("\n", @pcfqueue);
+   print QUEUE "</files>\n";
+   close QUEUE;
+
+   my $cmd = qq("$transformCommand" "-s:$queuefile" "-xsl:$xslt" 2>&1);
    # print "Running $cmd\n";
    $rc = system($cmd);
 
@@ -80,7 +88,6 @@ sub updatePCF {
    
 }
 
-
 sub do1File {
 
    my($filepath) = @_;
@@ -88,6 +95,9 @@ sub do1File {
 
    # print "\n\nProcessing $filepath\n";
    $files_total++;
+
+   my $displayname = $filepath;
+   $displayname =~ s/${inputdir}//;
 
    my $outputfilepath = $filepath;
    $outputfilepath =~ s/${inputdir}/$outputdir/;
@@ -97,7 +107,7 @@ sub do1File {
    # $file = <FILE>;
    # close(FILE);
 
-   $newfile = updatePCF($filepath, $outputfilepath);
+   $newfile = queuePCF($displayname, $filepath, $outputfilepath);
 
 }
 
@@ -118,23 +128,25 @@ sub wanted {
    my $relativefilename = $File::Find::name;
    $relativefilename =~ s/${inputdir}//;
 
-   print "Processing $relativefilename\n";
    
 
    # Skip .html and .inc files
    if ($filename =~ /\.(html|inc)$/) {
+      print "Processing $relativefilename\n";
       print "   skipping unsupported file type: $filename\n"; 
       return;
    }
 
    # Skip any file that has "banner-slider-config" in the name.
    if ($filename =~ /banner-slider-config/) {
+      print "Processing $relativefilename\n";
       print "   skipping banner-slider-config file\n"; 
       return;
    }
 
    # Skip any file that has "horizontal-menu" in the name.
    if ($filename =~ /horizontal-menu/) {
+      print "Processing $relativefilename\n";
       print "   skipping horizontal-menu file\n"; 
       return;
    }
@@ -148,15 +160,20 @@ sub wanted {
    }
 
    # Everything else gets copied
-   print "   copied.\n";
+   print "Processing $relativefilename\n";
+   print "   ignored for now.\n";
 
 }
 
 
+print "Pass 1 -- unused files\n\n";
 
 # Traverse desired filesystems
-
 File::Find::find({wanted => \&wanted}, $inputdir);
+print "\n\n";
+
+# Run all the queued PCF files
+updateQueuedPCFs(@pcfqueue);
 
 print "\n\nTotal pages: $files_total\n";
 # print "Files unparsable: $files_parseerror\n";

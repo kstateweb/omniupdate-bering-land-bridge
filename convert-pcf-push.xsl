@@ -1,20 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<!-- When a unit menu is transformed by itself, the transformation starts here.
-    * In other words, unit-menu.pcf files specify this file in the
-    * pcf-stylesheet processing instruction.
-    * 
-    * The reason for this separate file is that for preview and edit transformations,
-    * a complete document is needed.  
-    *
-    * For publish transformations, only the actual menu is needed because the menu
-    * is included inside another page.
-    * Compare transformations are treated the same as publish transformations
-    * because that is what it will be compared against.
-    *
-    * The transformation of the inner part of the menu is in the unit-menu.xsl file,
-    * triggered by the xsl:apply-templates instruction.
-    *
+<!-- Aborted attempt using push proicessing rather than pull.
 -->
 
 <xsl:stylesheet version="3.0" expand-text="yes"
