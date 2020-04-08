@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE xsl:stylesheet SYSTEM "http://commons.omniupdate.com/dtd/standard.dtd">
 
 <!-- 
 -->
@@ -30,12 +31,12 @@
        *
        * To force a newline, use <xsl:value-of select="$nl" />
     -->
-    <xsl:variable name="nl" as="xs:string" select="'&#10;'"/>
-    <xsl:variable name="nlnl" as="xs:string" select="'&#10;&#10;'"/>
+    <xsl:variable name="nl" as="xs:string" select="'&#xe002;&#10;&#xe002;'"/>
+    <xsl:variable name="nlnl" as="xs:string" select="'&#xe002;&#10;&#xe002;&#10;'"/>
     
     
     <xsl:template name="prevent-self-closure">
         <xsl:value-of select="'&#xe002;'" />
     </xsl:template>
-    
+   
 </xsl:stylesheet>

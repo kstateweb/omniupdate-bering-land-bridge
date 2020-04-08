@@ -13,7 +13,10 @@ my $transformQueuedPcfXslt = "convert-queued-pcfs.xsl";
 my $transformPcfXslt = "convert-pcf.xsl";
 my $transformPropertiesXslt = "convert-properties.xsl";
 my $current_dir = Cwd::cwd();
-my $datadir = "C:/omniupdate-bering-land-bridge-data/about";
+my $databasedir = "C:/omniupdate-bering-land-bridge-data";
+my $site = "grad";
+$site = "cba";
+my $datadir = "$databasedir/$site";
 my $inputdir = "$datadir/input";
 my $outputdir = "$datadir/output";
 my @pcfqueue = ();
@@ -52,7 +55,7 @@ sub wanted;
 #    if ($rc) {
 #       print "   Error return from transform: $rc\n";
 #    }
-   
+
 # }
 
 
@@ -78,14 +81,14 @@ sub updateQueuedPCFs {
    print QUEUE "</files>\n";
    close QUEUE;
 
-   my $cmd = qq("$transformCommand" "-s:$queuefile" "-xsl:$xslt" 2>&1);
+   my $cmd = qq("$transformCommand" "-s:$queuefile" "-xsl:$xslt" "ou:root=$databasedir" "ou:site=$site" 2>&1);
    # print "Running $cmd\n";
    $rc = system($cmd);
 
    if ($rc) {
       print "   Error return from transform: $rc\n";
    }
-   
+
 }
 
 sub do1File {
@@ -128,32 +131,32 @@ sub wanted {
    my $relativefilename = $File::Find::name;
    $relativefilename =~ s/${inputdir}//;
 
-   
+
 
    # Skip .html and .inc files
    if ($filename =~ /\.(html|inc)$/) {
       print "Processing $relativefilename\n";
-      print "   skipping unsupported file type: $filename\n"; 
+      print "   skipping unsupported file type: $filename\n";
       return;
    }
 
    # Skip any file that has "banner-slider-config" in the name.
    if ($filename =~ /banner-slider-config/) {
       print "Processing $relativefilename\n";
-      print "   skipping banner-slider-config file\n"; 
+      print "   skipping banner-slider-config file\n";
       return;
    }
 
    # Skip any file that has "horizontal-menu" in the name.
    if ($filename =~ /horizontal-menu/) {
       print "Processing $relativefilename\n";
-      print "   skipping horizontal-menu file\n"; 
+      print "   skipping horizontal-menu file\n";
       return;
    }
 
    # Process .pcf files
    if ($filename =~ /\.(pcf)$/) {
-      # print "   converted.\n"; 
+      # print "   converted.\n";
 
       do1File($File::Find::name);
       return;
