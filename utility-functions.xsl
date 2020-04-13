@@ -292,10 +292,13 @@
            * This function never looks above the directory specified by fs-root when searching for the named file.
            * Regardless of how the slashes are on input, ensure the value always starts and ends with a slash.
          -->
-        <xsl:variable name="fs-root" as="xs:string" select="replace($ou:root || $ou:site || '/', '\\', '/')"/>
+<!--        <xsl:variable name="fs-root" as="xs:string" select="replace($ou:root || $ou:site || '/', '\\', '/')"/>-->
+<!--        <xsl:variable name="fs-root" as="xs:string" select="'file:///C:/omniupdate-bering-land-bridge-data/cba-\-1/input/'"/>
+-->
+        <xsl:variable name="fs-root" as="xs:string" select="'file:///'"/>
         <xsl:variable name="fs-path-to-try" as="xs:string" select="$fs-root || fn:normalize-slash($path || '/' || $filename)"/>
 
-        <!--<xsl:message>Looking for {$fs-path-to-try}...</xsl:message>-->
+<!--        <xsl:message>Looking for {$fs-path-to-try}...</xsl:message>-->
         
         <xsl:choose>
             
@@ -857,6 +860,13 @@
         
         <xsl:sequence
             select="replace($html, '&amp;', '&amp;amp;')" />
+    </xsl:function>
+    
+    <xsl:function name="fn:simplify-url" as="xs:string?">
+        <xsl:param name="url" as="xs:string?" />
+        
+        <xsl:sequence
+            select="replace($url, '/index\.html', '/')" />
     </xsl:function>
     
 </xsl:stylesheet>

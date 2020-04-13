@@ -18,6 +18,7 @@
     <xsl:include href="utility-functions.xsl" />
     <xsl:include href="convert-pcf.xsl" />
     <xsl:include href="convert-properties-pcf.xsl" />
+    <xsl:include href="convert-horizontal-menu-pcf.xsl" />
     
     <!-- OmniUpdate parameters supplied to the XSLT transform, in alphabetical order.
        * Parameters not used in the tranformation are not included.
@@ -26,7 +27,7 @@
        * can still be assured that these are all supplied.
      -->
     <xsl:param name="ou:action" as="xs:string" select="''" />
-    <xsl:param name="ou:site" as="xs:string" select="''" />
+    <xsl:param name="ou:site" as="xs:string" select="'cba--1'" />
     <xsl:param name="ou:path" as="xs:string" select="''" />
     <xsl:param name="ou:dirname" as="xs:string" select="''" />
     <xsl:param name="ou:filename" as="xs:string" select="''" />
@@ -42,11 +43,17 @@
         
     <xsl:template match="file">
         
+<!--        <xsl:message>root, site {$ou:root}, {$ou:site}</xsl:message>-->
         <xsl:message>Processing {displayname}</xsl:message>
-                
+        
         <xsl:choose>
             <xsl:when test="matches(input, 'properties\.pcf$')">
                 <xsl:call-template name="properties-pcf" />
+            </xsl:when>
+            <xsl:when test="matches(input, 'horizontal-menu\.pcf$')">
+                <xsl:call-template name="horizontal-menu-pcf">
+                    <xsl:with-param name="input-file" as="xs:string" select="input" tunnel="yes"/>
+                </xsl:call-template>
             </xsl:when>
             <xsl:otherwise>
                 <xsl:call-template name="page-pcf">

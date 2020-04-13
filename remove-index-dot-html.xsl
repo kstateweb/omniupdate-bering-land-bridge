@@ -18,7 +18,7 @@
 
         <xsl:variable name="html" as="node()*">
             <xsl:copy>
-                <xsl:attribute name="href" select="replace(@href, '/index\.html', '/')"/>
+                <xsl:attribute name="href" select="fn:simplify-url(@href)"/>
                 <xsl:copy-of select="@*[local-name() ne 'href']"/>
                 <xsl:apply-templates select="node()" mode="#current"/>
             </xsl:copy>

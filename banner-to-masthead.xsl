@@ -48,11 +48,11 @@
         <xsl:param name="input-file" as="xs:string" tunnel="yes"/>
         
         <xsl:variable name="location" as="document-node()?" select="fn:locate-file($filename, $input-file)"/>
-<!--        <xsl:message>{$location/staging/absolute-path}</xsl:message>
+        <!--<xsl:message>{$location/staging/absolute-path}</xsl:message>
         <xsl:message>{unparsed-text-available($location/staging/absolute-path)}</xsl:message>-->
         <xsl:choose>
             <xsl:when test="$location/staging">
-                <xsl:sequence select="(doc(substring($location/staging/absolute-path, 2))//slide[enable eq '1']/slide-image/img)[1]" />
+                <xsl:sequence select="(doc($location/staging/absolute-path)//slide[enable/text() eq '1']/slide-image/img)[1]" />
             </xsl:when>
             <xsl:otherwise>
                 <p>Unable to locate <xsl:value-of select="$filename"/></p>

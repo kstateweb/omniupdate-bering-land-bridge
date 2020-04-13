@@ -15,7 +15,7 @@ my $transformPropertiesXslt = "convert-properties.xsl";
 my $current_dir = Cwd::cwd();
 my $databasedir = "C:/omniupdate-bering-land-bridge-data";
 my $site = "grad";
-$site = "cba";
+$site = "cba--1";
 my $datadir = "$databasedir/$site";
 my $inputdir = "$datadir/input";
 my $outputdir = "$datadir/output";
@@ -81,7 +81,8 @@ sub updateQueuedPCFs {
    print QUEUE "</files>\n";
    close QUEUE;
 
-   my $cmd = qq("$transformCommand" "-s:$queuefile" "-xsl:$xslt" "ou:root=$databasedir" "ou:site=$site" 2>&1);
+   # chdir("$databasedir/$site/output" );
+   my $cmd = qq("$transformCommand" "-s:$queuefile" "-xsl:$xslt" '\$ou:root=$databasedir' 2>&1);
    # print "Running $cmd\n";
    $rc = system($cmd);
 
@@ -104,6 +105,8 @@ sub do1File {
 
    my $outputfilepath = $filepath;
    $outputfilepath =~ s/${inputdir}/$outputdir/;
+
+   $outputfilepath =~ s/horizontal-menu/menu/;
 
    # open(FILE, "<$filename") || die "Unable to open file: $!\n";
    # undef $/;
@@ -144,13 +147,6 @@ sub wanted {
    if ($filename =~ /banner-slider-config/) {
       print "Processing $relativefilename\n";
       print "   skipping banner-slider-config file\n";
-      return;
-   }
-
-   # Skip any file that has "horizontal-menu" in the name.
-   if ($filename =~ /horizontal-menu/) {
-      print "Processing $relativefilename\n";
-      print "   skipping horizontal-menu file\n";
       return;
    }
 
