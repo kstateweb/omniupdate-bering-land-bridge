@@ -15,7 +15,8 @@ my $transformPropertiesXslt = "convert-properties.xsl";
 my $current_dir = Cwd::cwd();
 my $databasedir = "C:/omniupdate-bering-land-bridge-data";
 my $site = "grad";
-$site = "cba--1";
+$site = "cba-pass2";
+my $sitedir = "";
 my $datadir = "$databasedir/$site";
 my $inputdir = "$datadir/input";
 my $outputdir = "$datadir/output";
@@ -82,7 +83,7 @@ sub updateQueuedPCFs {
    close QUEUE;
 
    # chdir("$databasedir/$site/output" );
-   my $cmd = qq("$transformCommand" "-s:$queuefile" "-xsl:$xslt" '\$ou:root=$databasedir' 2>&1);
+   my $cmd = qq("$transformCommand" "-s:$queuefile" "-xsl:$xslt" '\$ou:root=$databasedir' '\$ou:sitedir=$sitedir' 2>&1);
    # print "Running $cmd\n";
    $rc = system($cmd);
 
@@ -127,6 +128,7 @@ sub wanted {
       return;
    }
 
+   # print "Debug: $File::Find::name\n";
    if (! (-f $File::Find::name)) {
       return;
    }
@@ -160,7 +162,7 @@ sub wanted {
 
    # Everything else gets copied
    print "Processing $relativefilename\n";
-   print "   ignored for now.\n";
+   print "   will be copied to the preview site.\n";
 
 }
 
