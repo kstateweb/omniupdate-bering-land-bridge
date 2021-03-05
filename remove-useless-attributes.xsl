@@ -27,7 +27,7 @@
         <xsl:apply-templates select="$html" mode="#current"/>
     </xsl:template>
     
-    <xsl:template match="a[@title]" mode="process-html" priority="1011">
+    <xsl:template match="a[@title] | img[@title eq @alt]" mode="process-html" priority="1011">
         
         <xsl:variable name="html" as="node()*">
             <xsl:copy>
