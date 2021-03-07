@@ -8,12 +8,12 @@ use File::Find ();
 use File::Path qw(make_path);
 use Cwd;
 
-my $transformCommand = "C:/Program Files/Saxonica/SaxonHE9.9N/bin/Transform.exe";
+my $transformCommand = "C:/Program Files/Saxonica/SaxonHE10.3N/bin/Transform.exe";
 my $transformQueuedPcfXslt = "convert-queued-pcfs.xsl";
 my $transformPcfXslt = "convert-pcf.xsl";
 my $transformPropertiesXslt = "convert-properties.xsl";
 my $current_dir = Cwd::cwd();
-my $databasedir = "C:/omniupdate-bering-land-bridge-data";
+my $databasedir = "D:/omniupdate-bering-land-bridge-data";
 my $site = "grad";
 $site = "cba-pass2";
 my $sitedir = "";

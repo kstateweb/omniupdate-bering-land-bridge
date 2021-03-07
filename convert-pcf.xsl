@@ -129,28 +129,7 @@
             </ouc:div>
             <xsl:value-of select="$nl"/>
             
-            <xsl:variable name="disclosure-bodies" as="element()*" select="//*[contains(@class, 'ksu-disclosure-body')]" />
-            <xsl:for-each select="$disclosure-bodies">
-                
-                <ouc:div label="{position()}" group="Everyone" button-text="Edit">
-                    <ouc:editor csspath="/ksu-resources/ou/editor/maincontent.css" cssmenu="/ksu-resources/ou/editor/maincontent-classes.txt"/>
-                    
-                    <xsl:variable name="html" as="node()*">
-                        <xsl:copy>
-                            <xsl:copy-of select="@*[local-name() ne 'class']"/>
-                            <xsl:apply-templates select="node()" mode="process-html"/>
-                        </xsl:copy>
-                    </xsl:variable>
-                    
-                    <xsl:apply-templates select="$html" mode="process-html"/>
-                </ouc:div>
-            </xsl:for-each>
-            
-            <xsl:for-each select="count($disclosure-bodies)+1 to 30">
-                <ouc:div label="{.}" group="Everyone" button-text="Edit">
-                    <ouc:editor csspath="/ksu-resources/ou/editor/maincontent.css" cssmenu="/ksu-resources/ou/editor/maincontent-classes.txt"/>
-                </ouc:div>
-            </xsl:for-each>
+            <xsl:call-template name="insert-disclosure-bodies"/>
 
             <xsl:value-of select="$nlnl"/>
 
